@@ -17,7 +17,9 @@ jobs:
         with:
           python-version: "3.12"
       - name: Scarica i dati IPA e rigenera data/enti.json
-        run: python scripts/aggiorna_ipa.py
+        run: |
+          pip install openpyxl
+          python scripts/aggiorna_ipa.py
       - name: Prova il motore di verifica
         run: node tests/test_verifica.js
       - name: Salva se ci sono modifiche

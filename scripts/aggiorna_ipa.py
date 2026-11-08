@@ -64,8 +64,8 @@ def trova_risorsa_enti():
                         nome = (r.get("name") or "") + " " + (r.get("description") or "")
                         fmt = (r.get("format") or "").lower()
                         url = r.get("url") or ""
-                        if re.search(r"\benti\b", nome, re.I) and ("csv" in fmt or url.lower().endswith(".csv")):
-                            if not re.search(r"\b(aoo|uo|unit|uffic|fattur)", nome, re.I):
+                        if p.get("name") == "enti" or re.fullmatch(r"\s*enti\s*", nome, re.I):
+                            if fmt in ("xlsx", "csv", "txt") or re.search(r"\.(xlsx|csv|txt)$", url, re.I):
                                 return url
             except Exception as e:  # noqa: BLE001
                 errori.append(f"{base}/{azione}: {e}")
@@ -101,6 +101,21 @@ def dominio(v):
     v = re.sub(r"^www\d?\.", "", v)
     v = re.split(r"[/?#:\s]", v)[0].strip(".")
     return v if "." in v else ""
+
+
+def leggi_xlsx(contenuto: bytes):
+    import openpyxl  # installato dal workflow
+    wb = openpyxl.load_workbook(io.BytesIO(contenuto), read_only=True, data_only=True)
+    ws = wb.active
+    righe = ws.iter_rows(values_only=True)
+    intest = [str(c).strip() if c is not None else "" for c in next(righe)]
+    return [{intest[i]: ("" if v is None else str(v)) for i, v in enumerate(r) if i < len(intest)} for r in righe]
+
+
+def leggi(contenuto: bytes):
+    if contenuto[:2] == b"PK":  # file Excel (zip)
+        return leggi_xlsx(contenuto)
+    return leggi_csv(contenuto)
 
 
 def leggi_csv(contenuto: bytes):
@@ -177,7 +192,7 @@ def costruisci(righe):
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--csv", help="file CSV degli enti scaricato a mano dal portale IPA")
+    ap.add_argument("--csv", help="file degli enti (XLSX o CSV) scaricato a mano dal portale IPA")
     ap.add_argument("--demo", action="store_true", help="segna i dati come dimostrativi")
     a = ap.parse_args()
 
@@ -189,7 +204,7 @@ def main():
         print("Scarico:", fonte_url)
         contenuto = scarica(fonte_url)
 
-    enti, domini_email = costruisci(leggi_csv(contenuto))
+    enti, domini_email = costruisci(leggi(contenuto))
     if not a.demo and len(enti) < 1000:
         raise RuntimeError(f"Solo {len(enti)} enti: dato anomalo, non sovrascrivo il file esistente.")
 
