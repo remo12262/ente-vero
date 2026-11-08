@@ -69,6 +69,17 @@ def trova_risorsa_enti():
                                 return url
             except Exception as e:  # noqa: BLE001
                 errori.append(f"{base}/{azione}: {e}")
+    # diagnostica: elenca cosa offre il catalogo
+    for base in BASI_CKAN:
+        try:
+            js = json.loads(scarica(f"{base}/api/3/action/package_search?rows=100"))
+            for p in js.get("result", {}).get("results", []):
+                print("PACCHETTO:", p.get("name"), "|", p.get("title"))
+                for r in p.get("resources", []):
+                    print("   RISORSA:", r.get("name"), "|", r.get("format"), "|", r.get("url"))
+            break
+        except Exception as e:  # noqa: BLE001
+            errori.append(f"diagnostica {base}: {e}")
     raise RuntimeError("Risorsa 'Enti' non trovata nel portale IPA.\n" + "\n".join(errori))
 
 
