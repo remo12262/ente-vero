@@ -165,6 +165,7 @@
   }
 
   Motore.prototype._aggiungi = function (d, nome, fonte, idx) {
+    if (PROVIDER_POSTA.indexOf(d) >= 0 || ACCORCIATORI.indexOf(d) >= 0) return; // mai "ufficiali"
     this.ufficiali[d] = { nome: nome, fonte: fonte, idx: idx };
     // "nucleo": il dominio senza estensione e senza punti, es. comune.messina.it -> comunemessina
     var senzaTld = d.split(".").slice(0, -1).join(".").replace(/^(www|pec|mail|posta)\./, "");
@@ -289,9 +290,6 @@
   };
 
   Motore.prototype.analizzaEmail = function (e) {
-    var uff = this.ufficiale(e.dominio);
-    if (uff) return { indirizzo: e.indirizzo, stato: "ufficiale", ente: uff.info.nome, idx: uff.info.idx,
-      motivi: ["Il dominio email " + uff.dominio + " risulta di un ente («" + uff.info.nome + "»). Attenzione: il mittente si può falsificare e una casella vera può essere violata."] };
     if (PROVIDER_POSTA.indexOf(e.dominio) >= 0) {
       var loc = e.indirizzo.split("@")[0].replace(/[.\-_]/g, ""), finto = null;
       for (var i = 0; i < this.nuclei.length; i++) if (loc.indexOf(this.nuclei[i][0]) >= 0) { finto = this.nuclei[i][1]; break; }
@@ -300,6 +298,9 @@
       return { indirizzo: e.indirizzo, stato: "sospetto", provider: true, ente: finto ? this.ufficiali[finto].nome : null,
         idx: finto ? this.ufficiali[finto].idx : undefined, motivi: mot };
     }
+    var uff = this.ufficiale(e.dominio);
+    if (uff) return { indirizzo: e.indirizzo, stato: "ufficiale", ente: uff.info.nome, idx: uff.info.idx,
+      motivi: ["Il dominio email " + uff.dominio + " risulta di un ente («" + uff.info.nome + "»). Attenzione: il mittente si può falsificare e una casella vera può essere violata."] };
     var a = this.analizzaDominio(e.dominio);
     return { indirizzo: e.indirizzo, stato: a.stato === "sconosciuto" ? "sconosciuto" : a.stato, ente: a.ente, idx: a.idx,
       motivi: a.motivi.map(function (m) { return m.replace("Il link", "L'indirizzo"); }) };

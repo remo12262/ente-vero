@@ -21,7 +21,7 @@ jobs:
           pip install openpyxl
           python scripts/aggiorna_ipa.py
       - name: Prova il motore di verifica
-        run: node tests/test_verifica.js
+        run: node tests/test_verifica.js -v
       - name: Salva se ci sono modifiche
         run: |
           git config user.name "ente-vero-bot"
