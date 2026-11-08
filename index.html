@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ente Vero — Il messaggio arriva davvero da un ente pubblico?</title>
+<meta name="description" content="Incolla l'SMS o l'email che dice di arrivare dal tuo Comune, dalla tua ASP, dall'INPS o da PagoPA: Ente Vero lo confronta con l'Indice ufficiale delle Pubbliche Amministrazioni e ti dice se è una truffa. Gratuito, senza registrazione, il testo non lascia il tuo dispositivo.">
+<meta name="referrer" content="no-referrer">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self'; base-uri 'none'; form-action 'none'">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cpath d='M32 4 8 13v17c0 15 10 26 24 30 14-4 24-15 24-30V13z' fill='%231f4e5a'/%3E%3Cpath d='m21 32 8 8 15-16' stroke='%23f2c14e' stroke-width='6' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<a class="salta" href="#principale">Vai al contenuto</a>
+
+<header class="testata">
+  <div class="contenitore testata-riga">
+    <div class="marchio">
+      <svg viewBox="0 0 64 64" aria-hidden="true"><path d="M32 4 8 13v17c0 15 10 26 24 30 14-4 24-15 24-30V13z"/><path class="spunta" d="m21 32 8 8 15-16"/></svg>
+      <div>
+        <span class="nome">Ente Vero</span>
+        <span class="motto">Il messaggio arriva davvero da un ente pubblico?</span>
+      </div>
+    </div>
+    <nav class="schede" role="tablist" aria-label="Sezioni">
+      <button role="tab" aria-selected="true" aria-controls="sez-verifica" id="tab-verifica">Verifica</button>
+      <button role="tab" aria-selected="false" aria-controls="sez-cerca" id="tab-cerca">Cerca un ente</button>
+      <button role="tab" aria-selected="false" aria-controls="sez-come" id="tab-come">Come funziona</button>
+      <button role="tab" aria-selected="false" aria-controls="sez-note" id="tab-note">Privacy e note</button>
+    </nav>
+  </div>
+</header>
+
+<div class="avviso-indipendente">
+  <div class="contenitore">Servizio <strong>indipendente e gratuito</strong>. Non è un sito della Pubblica Amministrazione e non è collegato agli enti citati.</div>
+</div>
+<div id="avviso-demo" class="avviso-demo" hidden>
+  <div class="contenitore">Versione di prova con un elenco ridotto di enti. La versione pubblicata usa l'Indice PA completo (oltre 20.000 enti).</div>
+</div>
+
+<main id="principale" class="contenitore">
+
+  <!-- ============ VERIFICA ============ -->
+  <section id="sez-verifica" role="tabpanel" aria-labelledby="tab-verifica">
+    <div class="intro">
+      <h1>Hai ricevuto un SMS o un'email dal Comune, dall'ASP, dall'INPS o da PagoPA?</h1>
+      <p>Incollalo qui sotto. Lo confrontiamo con l'<strong>Indice ufficiale delle Pubbliche Amministrazioni</strong> e ti diciamo se i link portano davvero all'ente o a un sito sosia.</p>
+    </div>
+
+    <div class="scheda-input">
+      <label for="messaggio" class="etichetta">Testo del messaggio (puoi includere anche il mittente)</label>
+      <textarea id="messaggio" rows="6" maxlength="10000" spellcheck="false" placeholder="Es.: «Comune di …: la sua posizione TARI risulta irregolare. Regolarizzi entro 24 ore su …»"></textarea>
+      <div class="azioni">
+        <button id="btn-verifica" class="primario">Verifica il messaggio</button>
+        <button id="btn-cancella" class="secondario">Cancella</button>
+        <span class="privacy-nota">🔒 Il testo resta sul tuo dispositivo: non viene inviato né salvato.</span>
+      </div>
+      <div class="esempi">
+        <span>Prova con un esempio:</span>
+        <button class="chip" data-es="0">TARI falsa</button>
+        <button class="chip" data-es="1">Multa falsa</button>
+        <button class="chip" data-es="2">Finto rimborso INPS</button>
+        <button class="chip" data-es="3">Finto referto ASP</button>
+        <button class="chip" data-es="4">Messaggio vero</button>
+      </div>
+    </div>
+
+    <div id="risultato" aria-live="polite"></div>
+  </section>
+
+  <!-- ============ CERCA ============ -->
+  <section id="sez-cerca" role="tabpanel" aria-labelledby="tab-cerca" hidden>
+    <div class="intro">
+      <h1>Trova i recapiti veri di un ente</h1>
+      <p>Prima di chiamare un numero o aprire un link ricevuto, cerca qui l'ente: ti mostriamo il sito e la PEC registrati nell'Indice PA.</p>
+    </div>
+    <div class="scheda-input">
+      <label for="cerca" class="etichetta">Nome dell'ente o del Comune</label>
+      <input id="cerca" type="search" autocomplete="off" placeholder="Es.: Comune di Catania, ASP Messina, INPS…">
+    </div>
+    <div id="risultati-cerca"></div>
+  </section>
+
+  <!-- ============ COME FUNZIONA ============ -->
+  <section id="sez-come" role="tabpanel" aria-labelledby="tab-come" hidden>
+    <div class="testo">
+      <h1>Come funziona</h1>
+      <p>I truffatori si fingono spesso enti pubblici: TARI e IMU «irregolari», multe da pagare, rimborsi INPS, referti dell'ASP, notifiche PagoPA. Il trucco quasi sempre è un <strong>link a un sito sosia</strong>, con un nome simile a quello vero.</p>
+      <h2>Cosa controlliamo</h2>
+      <ol>
+        <li><strong>I link e gli indirizzi email</strong> del messaggio vengono confrontati con i siti ufficiali di oltre 20.000 enti registrati nell'<em>Indice dei domicili digitali delle Pubbliche Amministrazioni e dei gestori di pubblici servizi</em> (IPA), tenuto da AgID, più i principali servizi nazionali (PagoPA, App IO, SEND, INPS, Agenzia delle Entrate…).</li>
+        <li><strong>I siti sosia</strong>: nomi che contengono quello di un ente ma non sono il suo sito (<code>comune-messina-tari.com</code>), refusi voluti (<code>inpps.it</code>), estensioni diverse, caratteri «travestiti», link accorciati.</li>
+        <li><strong>I campanelli d'allarme nel testo</strong>: fretta e minacce, richiesta di pagare o di dare i dati della carta, password e codici, rimborsi inattesi, numeri a pagamento da richiamare.</li>
+      </ol>
+      <h2>Cosa non può fare</h2>
+      <p>Se la casella email di un ente viene violata, i messaggi falsi partono da un indirizzo vero: nessun controllo tecnico lo può escludere. Per questo, anche con esito verde, chiediti sempre se la richiesta ha senso. <strong>Nel dubbio, contatta l'ente con i recapiti che trovi nella sezione «Cerca un ente»</strong>, mai con quelli scritti nel messaggio.</p>
+      <h2>Regole d'oro</h2>
+      <ul class="regole">
+        <li>Gli enti pubblici <strong>non chiedono mai</strong> password, PIN, codici SPID o dati della carta via SMS o email.</li>
+        <li>Le multe vere arrivano per raccomandata, PEC, App IO o SEND, non con un link in un SMS.</li>
+        <li>Non pagare da un link ricevuto: entra tu nel sito dell'ente o nell'App IO.</li>
+        <li>Non richiamare numeri indicati nel messaggio: cerca il numero sul sito ufficiale.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ============ NOTE ============ -->
+  <section id="sez-note" role="tabpanel" aria-labelledby="tab-note" hidden>
+    <div class="testo">
+      <h1>Privacy e note legali</h1>
+      <h2>Privacy</h2>
+      <p>Ente Vero è un sito statico: <strong>non ha server, database, cookie né sistemi di tracciamento</strong>. Il testo che incolli viene analizzato esclusivamente dal tuo browser e non viene trasmesso a nessuno, né al gestore del sito né a terzi. Chiudendo la pagina, non ne resta traccia.</p>
+      <h2>Fonte dei dati</h2>
+      <p>Elenco degli enti e relativi siti e recapiti: <strong>IndicePA – Agenzia per l'Italia Digitale (AgID)</strong>, dati aperti con licenza <a href="https://creativecommons.org/licenses/by/4.0/deed.it" rel="noopener">CC BY 4.0</a>. I dati sono pubblicati e aggiornati dagli enti stessi; sono rielaborati qui (estrazione dei domini) senza modificarne il contenuto. Ultimo aggiornamento: <span id="data-agg">—</span>.</p>
+      <h2>Limiti e responsabilità</h2>
+      <p>Il risultato è una <strong>valutazione automatica a scopo informativo</strong>, basata su dati pubblici e su regole ricorrenti nelle truffe. Non costituisce certificazione dell'autenticità di un messaggio né consulenza legale, e può contenere errori: un esito verde non garantisce che il messaggio sia autentico, un esito rosso non accusa il titolare di alcun dominio. L'indicazione «non risulta tra i domini ufficiali» significa soltanto che il dominio non è registrato nell'Indice PA per l'ente in questione.</p>
+      <p>In caso di truffa o tentata truffa puoi rivolgerti alla <a href="https://www.commissariatodips.it" rel="noopener">Polizia Postale</a>.</p>
+      <h2>Chi lo cura</h2>
+      <p>Progetto indipendente e senza scopo di lucro a cura di <span id="autore">Remo Pulcini</span>. Segnalazioni e correzioni: <a id="contatto" href="mailto:remo.pulcini@libero.it">remo.pulcini@libero.it</a>.</p>
+    </div>
+  </section>
+</main>
+
+<footer class="piede">
+  <div class="contenitore">
+    <span>Ente Vero · servizio indipendente · dati IndicePA (AgID), CC BY 4.0 · aggiornati al <span id="data-agg-piede">—</span></span>
+    <span>Nessun cookie, nessun tracciamento.</span>
+  </div>
+</footer>
+
+<script src="data/enti.js"></script>
+<script src="assets/verifica.js"></script>
+<script src="assets/app.js"></script>
+</body>
+</html>

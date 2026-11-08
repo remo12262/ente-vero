@@ -1,0 +1,20 @@
+Codice_IPA;Denominazione_ente;Tipologia;Ente_in_liquidazione;Mail1;Tipo_Mail1;Sito_istituzionale
+c_f158;Comune di Messina;Pubbliche Amministrazioni;N;;;www.comune.messina.it
+c_c351;Comune di Catania;Pubbliche Amministrazioni;N;;;www.comune.catania.it
+c_g273;Comune di Palermo;Pubbliche Amministrazioni;N;;;www.comune.palermo.it
+c_h501;Roma Capitale;Pubbliche Amministrazioni;N;;;www.comune.roma.it
+c_f205;Comune di Milano;Pubbliche Amministrazioni;N;;;www.comune.milano.it
+c_a944;Comune di Bologna;Pubbliche Amministrazioni;N;;;www.comune.bologna.it
+c_f839;Comune di Napoli;Pubbliche Amministrazioni;N;;;www.comune.napoli.it
+c_l219;Comune di Torino;Pubbliche Amministrazioni;N;;;www.comune.torino.it
+c_d612;Comune di Firenze;Pubbliche Amministrazioni;N;;;www.comune.fi.it
+c_i829;Comune di Sondrio;Pubbliche Amministrazioni;N;;;www.comune.sondrio.it
+asp_ct;Azienda Sanitaria Provinciale di Catania;Pubbliche Amministrazioni;N;;;www.aspct.it
+asp_me;Azienda Sanitaria Provinciale di Messina;Pubbliche Amministrazioni;N;;;www.asp.messina.it
+r_sicili;Regione Siciliana;Pubbliche Amministrazioni;N;;;www.regione.sicilia.it
+r_lazio;Regione Lazio;Pubbliche Amministrazioni;N;;;www.regione.lazio.it
+inps;Istituto Nazionale della Previdenza Sociale;Pubbliche Amministrazioni;N;;;www.inps.it
+age;Agenzia delle Entrate;Pubbliche Amministrazioni;N;;;www.agenziaentrate.gov.it
+m_sa;Ministero della Salute;Pubbliche Amministrazioni;N;;;www.salute.gov.it
+m_it;Ministero dell'Interno;Pubbliche Amministrazioni;N;;;www.interno.gov.it
+ente_liq;Consorzio Esempio in liquidazione;Pubbliche Amministrazioni;S;;;www.consorzio-esempio.it
